@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import { string } from "zod";
 
 
 export const blogRouter = new Hono<{
@@ -113,7 +114,6 @@ blogRouter.put('/update', async (c) => {
 })
 
 blogRouter.get('/entry/:id', async (c) => {
-    console.log("reached")
     const id = c.req.param("id")
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
@@ -122,13 +122,24 @@ blogRouter.get('/entry/:id', async (c) => {
     // taking the body 
     try {
 
-        const blog = await prisma.post.findUnique({
+        const blog = await prisma.post.findMany({
             where: {
                 id: id
+            }, select: {
+                id: true,
+                title: true,
+                content: true,
+                published: true,
+                authorId: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
 
-        return c.json({ blog: blog })
+        return c.json({ blog })
     } catch (error) {
         c.status(411);
         return c.json({ message: "Error while fetching the blog" })
@@ -144,7 +155,19 @@ blogRouter.get('/bulk', async (c) => {
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
     try {
-        const blogs = await prisma.post.findMany();
+        const blogs = await prisma.post.findMany({
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                published: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
         return c.json({ blogs })
     } catch (error) {
         console.log(error)
