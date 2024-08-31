@@ -4,12 +4,14 @@ import { Signin } from "./pages/Signin"
 import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import CreateBlog from './pages/CreateBlog'
+import { Appbar } from './components/Appbar'
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+        <Appbar />
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />

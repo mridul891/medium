@@ -1,26 +1,16 @@
-import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
-import { useDebounce } from "../hooks";
-import { BACKEND_URL } from "../confi";
-import axios from "axios";
 
-export const Editor = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
-
-    const createPost = async () => {
-        await axios.post(`${BACKEND_URL}/api/v1/blog/create`, value, {
-            headers: {
-                Authorization: localStorage.getItem('mediumToken')
-            }
-        }).then((res) => console.log(res))
-
-    }
+export const Editor = ({onChange} : {onChange : (e: ChangeEvent<HTMLTextAreaElement>)=>void}) => {
 
     return <>
-        
+        <form>
+            <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50  ">
+                <div className="px-4 py-2 bg-white rounded-b-lg">
+                    <label htmlFor="editor" className="sr-only">Publish post</label>
+                    <textarea id="editor" onChange ={onChange} rows="8" className="block focus:outline-none w-full px-0 text-sm text-gray-800 bg-white border-0 " placeholder="Write an article..." required ></textarea>
+                </div>
+            </div>
+            
+        </form>
     </>
 
 }

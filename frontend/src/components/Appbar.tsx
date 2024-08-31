@@ -3,9 +3,9 @@ import { Avatar } from "./Blogcard"
 
 export const Appbar = () => {
 
-    return <div className="border-b flex justify-between py-5 px-10 text-2xl font-bold">
+    return <div className="border-b flex justify-between items-center py-5 px-10 text-2xl font-bold">
         <Link to="/">
-            <div>Medium</div>
+            <div className="text-4xl font-extrabold">BlogEz</div>
         </Link>
         <div className="text-lg flex items-center justify-center gap-10 ">
             <Link to="/create">
