@@ -38,6 +38,9 @@ interface SingleBlog {
     "content": string
     "published": boolean
     "authorId": string
+    "author": {
+        "name": string
+    }
 }
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);

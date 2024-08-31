@@ -3,11 +3,10 @@ import { FullBlog } from "../pages/FullBlog"
 import { Skeleton } from "./Skeleton"
 
 export const DetailsBlog = ({ id }: { id: string }) => {
-    console.log(id)
     const { loading, blog } = useBlog({ id })
     if (loading) {
         return <div>
-            <Skeleton/>
+            <Skeleton />
         </div>
     }
     return (

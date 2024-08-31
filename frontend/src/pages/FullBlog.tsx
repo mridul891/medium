@@ -1,4 +1,4 @@
-import { Appbar } from "../components/Appbar"
+
 import { Avatar } from "../components/Blogcard"
 
 interface BlogsDetail {
